@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 
 import {BsFillPlayFill} from "react-icons/bs";
 import {BiChevronDown} from "react-icons/bi";
@@ -13,6 +13,20 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({data}) => {
     const router = useRouter()
     const {openModal} = useInfoModal()
+    const videoRef = useRef<HTMLVideoElement>(null);
+
+    const currentYear = React.useMemo(() => new Date().getFullYear(), []);
+    const handleMouseEnter = () => {
+        if (videoRef.current) {
+            videoRef.current.play();
+        }
+    }
+
+    const handleMouseLeave = () => {
+        if (videoRef.current) {
+            videoRef.current.pause();
+        }
+    }
 
     return (
         <div className="group bg-zinc-900 col-span relative h-[12vw]">
@@ -20,9 +34,15 @@ const MovieCard: React.FC<MovieCardProps> = ({data}) => {
                 className="cursor-pointer object-cover transition duration shadow-xl rounded-md group-hover:opacity-90 delay-50 sm:group-hover:opacity-0 w-full h-[12vw]"
                 src={data.thumbnailUrl} alt="thumbnail"/>
             <div
-                className="opacity-0 absolute top-0 transition duration-200 z-10 invisible sm:visible w-full scale-0 delay-50 group-hover:scale-110 group-hover:-translate-y-[6vw] group-hover:translate-x-[2vw] group-hover:opacity-100">
-                <img className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
-                     src={data.thumbnailUrl} alt="thumbnail"/>
+                className="opacity-0 absolute top-0 transition duration-200 z-10 invisible sm:visible w-full scale-0 delay-50 group-hover:scale-110 group-hover:-translate-y-[6vw] group-hover:translate-x-[2vw] group-hover:opacity-100"
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            >
+                <video
+                    ref={videoRef}
+                    className="cursor-pointer object-cover transition duration shadow-xl rounded-t-md w-full h-[12vw]"
+                    src={data.videoUrl} loop muted={false} poster={data.thumbnailUrl}
+                />
                 <div className="z-10 bg-zinc-800 p-2 lg:p-4 absolute w-full transition shadow-md rounded-b-md">
                     <div className="flex flex-row items-center gap-3">
                         <div onClick={() => router.push(`/watch/${data?.id}`)}
@@ -38,7 +58,7 @@ const MovieCard: React.FC<MovieCardProps> = ({data}) => {
                     </div>
 
                     <p className="text-green-400 font-semibold mt-4">
-                        New <span className="text-white">2023</span>
+                        New <span className="text-white">{currentYear}</span>
                     </p>
 
                     <div className="flex flex-row mt-4 gap-2 items-center">
