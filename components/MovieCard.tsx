@@ -5,6 +5,7 @@ import {BiChevronDown} from "react-icons/bi";
 import FavouriteButton from "@/components/FavouriteButton";
 import {useRouter} from "next/router";
 import useInfoModal from "@/hooks/useInfoModal";
+import useMuteBillboard from "@/hooks/useMuteBillboard";
 
 interface MovieCardProps {
     data: Record<string, any>
@@ -13,11 +14,13 @@ interface MovieCardProps {
 const MovieCard: React.FC<MovieCardProps> = ({data}) => {
     const router = useRouter()
     const {openModal} = useInfoModal()
+    const {muteBillboard} = useMuteBillboard()
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const currentYear = React.useMemo(() => new Date().getFullYear(), []);
     const handleMouseEnter = () => {
         if (videoRef.current) {
+            muteBillboard()
             videoRef.current.play();
         }
     }

@@ -4,6 +4,7 @@ import useMovie from "@/hooks/useMovie";
 import {AiOutlineClose} from "react-icons/ai";
 import PlayButton from "@/components/PlayButton";
 import FavouriteButton from "@/components/FavouriteButton";
+import useMuteBillboard from "@/hooks/useMuteBillboard";
 
 interface InfoModalProps {
     visible?: boolean;
@@ -12,13 +13,17 @@ interface InfoModalProps {
 
 const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
     const [isVisible, setIsVisible] = useState(!!visible)
+    const {muteBillboard} = useMuteBillboard()
 
     const {movieId} = useInfoModal()
     const {data = {}} = useMovie(movieId)
 
+    const currentYear = React.useMemo(() => new Date().getFullYear(), []);
+
     useEffect(() => {
+        if (visible) muteBillboard()
         setIsVisible(!!visible)
-    }, [visible])
+    }, [visible, muteBillboard])
 
     const handleClose = useCallback(() => {
         setIsVisible(false)
@@ -39,7 +44,7 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
                     <div className="relative h-96">
                         <video className="w-full brightness-[60%] object-cover h-full"
                                autoPlay
-                               muted
+                               muted={false}
                                loop
                                poster={data?.thumbnailUrl} src={data?.videoUrl}/>
                         <div onClick={handleClose}
@@ -61,7 +66,7 @@ const InfoModal: React.FC<InfoModalProps> = ({visible, onClose}) => {
 
                     <div className="px-12 py-8">
                         <p className="text-green-400 font-semibold text-lg">
-                            New
+                            New <span className="text-white">{currentYear}</span>
                         </p>
                         <p className="text-white text-lg">
                             {data?.duration}
