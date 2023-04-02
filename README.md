@@ -17,7 +17,7 @@ Try it yourself at [https://netflix-clone-neon-seven.vercel.app/](https://netfli
 
 Here's an embedded demo video:
 
-[![Netflix Clone Demo Video](https://youtu.be/KgSyoeYeREg/maxresdefault.jpg)](https://youtu.be/KgSyoeYeREg)
+[![Netflix Clone Demo Video](/assets/demo-video-thumbnail.jpg)](https://youtu.be/KgSyoeYeREg)
 
 ## Stack
 
