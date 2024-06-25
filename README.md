@@ -6,14 +6,7 @@ This is a full-stack application with authentication using [NextAuth](https://ne
 
 ## Demo
 
-Try it yourself at [https://netflix-clone-neon-seven.vercel.app/](https://netflix-clone-neon-seven.vercel.app/).
-
-> Please note that the website may be auto-detected as unsafe because it has the name "netflix" in its domain, hence
-> detected as suspicious of phishing. You can safely ignore it.
->
-> ⚠️ Although I am saving new user registrations in the database with a hashed password, I urge you not to use any
-> password that you share with your other accounts.
-
+Try it yourself at [https://hari-movie-dashboard.vercel.app](https://hari-movie-dashboard.vercel.app/).
 
 Here's an embedded demo video:
 
